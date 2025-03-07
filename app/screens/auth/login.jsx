@@ -1,9 +1,20 @@
-import { Text, View, ImageBackground, Image, StyleSheet, Pressable, TextInput } from "react-native";
-import { useRouter } from 'expo-router'
+import { useState } from "react";
+import { Text, View, ImageBackground, Image, StyleSheet, Pressable, TextInput, Alert } from "react-native";
+import { useRouter } from 'expo-router';
 
-export default function login() {
+export default function Login() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const router = useRouter()
+  const handleLogin = () => {
+    if (!email || !password) {
+      Alert.alert("Error", "All fields are required.");
+      return;
+    }
+    // Proceed with login
+    router.push("/screens/tabs/home");
+  };
 
   return (
     <ImageBackground
@@ -21,68 +32,67 @@ export default function login() {
             style={styles.textInput}
             placeholder="Email"
             keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
           />
           <TextInput
             style={styles.textInput}
             placeholder="Password"
             secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
           />
-          <Pressable style={styles.button} onPress={() => router.push("/screens/tabs/home")}>
+          <Pressable style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>LOGIN</Text>
           </Pressable>
-          {/* FIXED Pressable TEXT ERROR */}
-          <Pressable onPress={() => router.push("/screens/auth/register")}>
+          <Pressable onPress={() => router.push("/screens/auth/register")}>  
             <Text style={styles.linktext}>Don't have an account? Sign up</Text>
           </Pressable>
         </View>
       </View>
     </ImageBackground>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-    imgbackground: {
-        flex: 1,
-        justifyContent: "space-between",
-        alignItems: "center",
-      },
-
-      logo: {
-        width: 150,
-        resizeMode: "contain",
-        right: 75,
-      },
-
-      linktext: {
-        paddingTop: 20,
-        color: "white",
-        textAlign: "center",
-      },
-
-      textInput: {
-        backgroundColor: "white",
-        borderRadius: 50,
-      },
-
-      buttonContainer: {
-        width: "100%",
-        gap: 10,
-        height: "fit-content",
-        marginBottom: 34,
-      },
-    
-      button: {
-        backgroundColor: "black",
-        borderRadius: 16,
-        padding: 10,
-        paddingLeft: 125,
-        paddingRight: 125,
-        alignItems: "center",
-      },
-    
-      buttonText: {
-        color: "white",
-        fontSize: 16,
-        fontWeight: "bold",
-      },
-})
+  imgbackground: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  logo: {
+    width: 150,
+    resizeMode: "contain",
+    right: 75,
+  },
+  linktext: {
+    paddingTop: 20,
+    color: "white",
+    textAlign: "center",
+  },
+  textInput: {
+    backgroundColor: "white",
+    borderRadius: 50,
+    padding: 10,
+    width: 250,
+  },
+  buttonContainer: {
+    width: "100%",
+    gap: 10,
+    height: "fit-content",
+    marginBottom: 34,
+    alignItems: "center",
+  },
+  button: {
+    backgroundColor: "black",
+    borderRadius: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 50,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});
