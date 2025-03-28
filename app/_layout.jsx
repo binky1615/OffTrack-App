@@ -6,7 +6,7 @@ export default function Layout() {
             <Stack.Screen name="index" />
             <Stack.Screen name="screens/auth/login" />
             <Stack.Screen name="screens/auth/register" />
-            <Stack.Screen name="components/detailpage/[id]" /> {/* ✅ Corrected dynamic route */}
+            <Stack.Screen name="components/detailpage/[id]" />
         </Stack>
     );
 }

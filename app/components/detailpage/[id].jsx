@@ -1,10 +1,10 @@
 import { Text, View, ImageBackground, StyleSheet, Image } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import trips from '../../trips'; // ✅ Ensure correct import path
+import trips from '../../trips'; 
 
 export default function DetailPage() {
-    const { id } = useLocalSearchParams(); // ✅ Get ID from the URL
-    const trip = trips.find((trip) => trip.id === String(id)); // ✅ Convert id to string and find trip
+    const { id } = useLocalSearchParams(); 
+    const trip = trips.find((trip) => trip.id === String(id)); 
 
     if (!trip) {
         return <View style={styles.errorContainer}><Text style={styles.errorText}>Trip not found</Text></View>;
