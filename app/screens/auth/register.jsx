@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { Text, View, ImageBackground, Image, StyleSheet, Pressable, TextInput, Alert } from "react-native";
 import { useRouter } from 'expo-router';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Login() {
+export default function Register() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleRegister = () => {
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem("userEmail", email);
+      await AsyncStorage.setItem("userPassword", password);
+    } catch (e) {
+      console.error("Error saving data", e);
+    }
+  };
+
+  const handleRegister = async () => {
     if (!email || !password || !confirmPassword) {
       Alert.alert("Error", "All fields are required.");
       return;
@@ -17,8 +27,8 @@ export default function Login() {
       Alert.alert("Error", "Passwords do not match.");
       return;
     }
-    // Proceed with registration
-    router.push("/screens/tabs/home");
+    await saveData();
+    router.push("/screens/auth/login");
   };
 
   return (

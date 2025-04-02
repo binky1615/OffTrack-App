@@ -1,19 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Text, View, ImageBackground, Image, StyleSheet, Pressable, TextInput, Alert } from "react-native";
 import { useRouter } from 'expo-router';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [storedEmail, setStoredEmail] = useState(null);
+  const [storedPassword, setStoredPassword] = useState(null);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    try {
+      const savedEmail = await AsyncStorage.getItem("userEmail");
+      const savedPassword = await AsyncStorage.getItem("userPassword");
+      if (savedEmail && savedPassword) {
+        setStoredEmail(savedEmail);
+        setStoredPassword(savedPassword);
+      }
+    } catch (error) {
+      console.error("Error fetching data", error);
+    }
+  };
 
   const handleLogin = () => {
     if (!email || !password) {
       Alert.alert("Error", "All fields are required.");
       return;
     }
-    // Proceed with login
-    router.push("/screens/tabs/home");
+    
+    if (email === storedEmail && password === storedPassword) {
+      router.push("/screens/tabs/home");
+    } else {
+      Alert.alert("Onjuiste gebruikersnaam of wachtwoord");
+    }
   };
 
   return (
