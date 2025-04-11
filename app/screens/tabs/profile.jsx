@@ -9,7 +9,7 @@ export default function ProfileScreen() {
       <Image source={require("../../../assets/images/shinji.png")} style={styles.profileImage} />
       
       <View style={styles.profileInfo}>
-        <Text style={styles.name}>Ikari Shinji</Text>
+        <Text style={styles.name}>Valentijn Metz</Text>
         <Text style={styles.pronouns}>he/him</Text>
       </View>
       
